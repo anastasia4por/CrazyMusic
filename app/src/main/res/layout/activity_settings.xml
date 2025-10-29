@@ -15,8 +15,8 @@
         android:src="@drawable/ic_arrow_back"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_margin="8dp"
-        android:contentDescription="Назад"
-        android:tint="#FFFFFF" />
+        android:contentDescription="@string/back_button"
+        app:tint="#FFFFFF" />
 
     <!-- Заголовок -->
     <TextView

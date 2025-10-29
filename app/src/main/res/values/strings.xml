@@ -11,4 +11,7 @@
     <string name="about_game">О игре</string>
     <string name="singing_vegetables">Поющие овощи</string>
     <string name="game_description">Музыкальная игра для Android, где овощи поют при нажатии!</string>
+
+    <!-- New string for back button -->
+    <string name="back_button">Назад</string>
 </resources>
