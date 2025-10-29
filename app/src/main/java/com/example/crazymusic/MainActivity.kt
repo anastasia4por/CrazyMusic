@@ -1,5 +1,6 @@
 package com.example.crazymusic
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +25,9 @@ class MainActivity : AppCompatActivity() {
             showToast("Мои песни")
         }
         findViewById<MaterialButton>(R.id.buttonSettings).setOnClickListener {
-            showToast("Настройки")
+            // ПЕРЕХОД НА ЭКРАН НАСТРОЕК
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
         }
     }
 

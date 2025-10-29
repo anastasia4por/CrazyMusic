@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">CrazyMusic</string>
+    <string name="app_name">Crazy Music</string>
+
+    <!-- Settings Screen Strings -->
+    <string name="settings_title">Настройки</string>
+    <string name="sound_effects">Звуковые эффекты</string>
+    <string name="interface_sounds">Звуки интерфейса</string>
+    <string name="volume">Громкость</string>
+    <string name="volume_percent">70%</string>
+    <string name="delete_all_sounds">Удалить все записанные звуки овощей</string>
+    <string name="about_game">О игре</string>
+    <string name="singing_vegetables">Поющие овощи</string>
+    <string name="game_description">Музыкальная игра для Android, где овощи поют при нажатии!</string>
 </resources>
