@@ -7,113 +7,122 @@
     android:padding="16dp"
     android:background="@drawable/gradient_background">
 
-    <!-- Кнопка назад -->
-    <ImageButton
-        android:id="@+id/buttonBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_arrow_back"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/back_button"
-        app:tint="#FFFFFF" />
-
-    <!-- Заголовок -->
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Заголовок и кнопка назад в одной строке -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings_title"
-        android:textSize="28sp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp">
 
-    <!-- Звуковые эффекты -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@drawable/card_background"
-        android:layout_margin="8dp"
-        android:gravity="center_vertical">
+        <!-- Кнопка назад - УМЕНЬШЕННАЯ -->
+        <ImageButton
+            android:id="@+id/buttonBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="@drawable/back_button_background"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/back_button"
+            app:tint="#FFFFFF"
+            android:elevation="8dp"
+            android:padding="12dp" />
 
+        <!-- Заголовок -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/sound_effects"
-            android:textSize="18sp"
-            android:textColor="#2D3748" />
+            android:text="@string/settings_title"
+            android:textSize="34sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat_mediumitalic" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switchSoundEffects"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
-
-    </LinearLayout>
-
-    <!-- Звуки интерфейса -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@drawable/card_background"
-        android:layout_margin="8dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/interface_sounds"
-            android:textSize="18sp"
-            android:textColor="#2D3748" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switchInterfaceSounds"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
+        <!-- Невидимый элемент для балансировки -->
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:visibility="invisible" />
 
     </LinearLayout>
 
-    <!-- Громкость -->
+    <!-- Объединенная карточка звуковых эффектов и громкости -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
         android:background="@drawable/card_background"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:padding="8dp">
 
-        <TextView
+        <!-- Звуковые эффекты -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/volume"
-            android:textSize="18sp"
-            android:textColor="#2D3748" />
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="center_vertical">
 
-        <SeekBar
-            android:id="@+id/seekBarVolume"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sound_effects"
+                android:textSize="18sp"
+                android:textColor="#2D3748" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchSoundEffects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
+        </LinearLayout>
+
+        <!-- Разделитель -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E2E8F0"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp" />
+
+        <!-- Громкость -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:progress="70"
-            android:max="100"
-            android:layout_marginTop="8dp" />
+            android:orientation="vertical"
+            android:padding="12dp">
 
-        <TextView
-            android:id="@+id/textVolumePercent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/volume_percent"
-            android:textSize="14sp"
-            android:textColor="#4A5568"
-            android:gravity="center" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/volume"
+                android:textSize="18sp"
+                android:textColor="#2D3748" />
+
+            <SeekBar
+                android:id="@+id/seekBarVolume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="70"
+                android:max="100"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/textVolumePercent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/volume_percent"
+                android:textSize="14sp"
+                android:textColor="#4A5568"
+                android:gravity="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -125,7 +134,7 @@
         android:text="@string/delete_all_sounds"
         android:textSize="16sp"
         android:textColor="#FFFFFF"
-        app:backgroundTint="#E53E3E"
+        app:backgroundTint="#E57373"
         app:cornerRadius="12dp"
         android:layout_margin="8dp"
         android:textAllCaps="false" />
@@ -135,27 +144,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
         android:background="@drawable/card_background"
         android:layout_margin="8dp"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="40dp"
+        android:padding="20dp">
 
+
+        <!-- Название игры -->
+        <!-- Название игры с градиентом -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_game"
+            android:text="@string/singing_vegetables"
             android:textSize="20sp"
-            android:textColor="#2D3748"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/text_gradient"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:textColor="#FFFFFF" />
 
+        <!-- Описание игры -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/game_description"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="#4A5568"
-            android:layout_marginTop="8dp"
-            android:lineSpacingExtra="4dp" />
+            android:gravity="center"
+            android:lineSpacingExtra="6dp" />
 
     </LinearLayout>
 
