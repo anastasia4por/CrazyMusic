@@ -3,7 +3,7 @@
 
     <!-- Settings Screen Strings -->
     <string name="settings_title">Настройки</string>
-    <string name="sound_effects">Звуки интерфейса</string>
+    <string name="interface_sounds">Звуки интерфейса</string>
     <string name="volume">Громкость</string>
     <string name="volume_percent">70%</string>
     <string name="delete_all_sounds">Удалить все записанные звуки овощей</string>
