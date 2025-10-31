@@ -16,13 +16,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupButtons() {
         findViewById<MaterialButton>(R.id.buttonCreate).setOnClickListener {
-            showToast("Создание мелодии")
+            val intent = Intent(this, CreateMusicActivity::class.java)
+            startActivity(intent)
         }
         findViewById<MaterialButton>(R.id.buttonRepeat).setOnClickListener {
-            showToast("Повтор звука")
+            val intent = Intent(this, RepeatMusicActivity::class.java)
+            startActivity(intent)
         }
         findViewById<MaterialButton>(R.id.buttonSongs).setOnClickListener {
-            showToast("Мои песни")
+            val intent = Intent(this, SaveMusicActivity::class.java)
+            startActivity(intent)
         }
         findViewById<MaterialButton>(R.id.buttonSettings).setOnClickListener {
             // ПЕРЕХОД НА ЭКРАН НАСТРОЕК

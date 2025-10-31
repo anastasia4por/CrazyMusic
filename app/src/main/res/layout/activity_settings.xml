@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp">
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="20dp">
 
         <!-- Кнопка назад - УМЕНЬШЕННАЯ -->
         <ImageButton
@@ -121,10 +121,9 @@
             </LinearLayout>
 
 
-
         </LinearLayout>
 
-        <!-- Громкость -->
+        <!-- Громкость Ползунок-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,9 +135,9 @@
                 android:id="@+id/seekBarVolume"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:progress="70"
+                android:layout_marginTop="8dp"
                 android:max="100"
-                android:layout_marginTop="8dp" />
+                android:progress="70" />
 
         </LinearLayout>
 

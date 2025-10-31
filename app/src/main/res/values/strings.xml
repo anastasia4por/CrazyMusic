@@ -1,5 +1,13 @@
 <resources>
+    <string name="smile">🎵</string>
     <string name="app_name">Crazy Music</string>
+    <string name="create_music">Создай мелодию</string>
+    <string name="repeat_music">Повтори звук</string>
+    <string name="save_music">Мои песни</string>
+
+    <!-- Settings Screen Strings -->
+
+
 
     <!-- Settings Screen Strings -->
     <string name="settings_title">Настройки</string>

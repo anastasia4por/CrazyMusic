@@ -25,6 +25,21 @@
             </intent-filter>
         </activity>
 
+        <!-- Активность создания мелодий -->
+        <activity
+            android:name=".CreateMusicActivity"
+            android:exported="false" />
+
+        <!-- Активность повторения звука -->
+        <activity
+            android:name=".RepeatMusicActivity"
+            android:exported="false" />
+
+        <!-- Активность просмотра сохраненных мелодий -->
+        <activity
+            android:name=".SaveMusicActivity"
+            android:exported="false" />
+
         <!-- Активность настроек -->
         <activity
             android:name=".SettingsActivity"
