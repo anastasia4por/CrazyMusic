@@ -2,9 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="switch_track_color">#8AD3A0</color>
+    <color name="switch_track_color">#a3fd1c</color>
     <color name="switch_track_color_off">#B1B1B3</color>
-    <color name="switch_thumb_color">#4ADE80</color>
+    <color name="switch_thumb_color">#22C55E</color>
     <color name="switch_thumb_color_off">#9CA3AF</color>
 </resources>
 
