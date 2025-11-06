@@ -75,8 +75,9 @@ class VineSeekBar @JvmOverloads constructor(
     private fun drawFlowerThumb(canvas: Canvas, x: Float, centerY: Float, progress: Float) {
         val flower = when {
             progress < 0.1 -> "🌱"
-            progress < 0.5 -> "🌸"
-            progress < 0.85 -> "🌺"
+            progress < 0.3 -> "🌸"
+            progress < 0.55 -> "🌹"
+            progress < 0.80 -> "🌺"
             else -> "🌻"
         }
 
