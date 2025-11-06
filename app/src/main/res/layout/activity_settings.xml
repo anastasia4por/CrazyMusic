@@ -128,17 +128,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="10dp"
             android:paddingTop="0dp">
 
-            <SeekBar
+            <com.example.crazymusic.VineSeekBar
                 android:id="@+id/seekBarVolume"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="50dp"
                 android:max="100"
                 android:progress="70" />
-
         </LinearLayout>
 
     </LinearLayout>
