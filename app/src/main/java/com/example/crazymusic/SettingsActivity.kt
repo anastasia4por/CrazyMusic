@@ -111,6 +111,7 @@ class SettingsActivity : AppCompatActivity() {
 
         textVolumePercent.text = "$volumePercent%"
         seekBarVolume.progress = volumePercent
+        seekBarVolume.invalidate() // Перерисовываем для обновления анимации
     }
 
     private fun setupDeleteButton() {
