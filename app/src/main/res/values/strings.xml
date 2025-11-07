@@ -8,8 +8,10 @@
     <!-- Create Music Screen Strings -->
     <string name="record">Запись</string>
     <string name="info">Информация</string>
-    <string name="game_info_title">Об игре</string>
-    <string name="game_info_message">об игре об игре</string>
+    <string name="game_info_title">Как играть</string>
+
+    <string name="game_info_message">Раскройте свой творческий потенциал и создайте свою мелодию в игре Crazy Music!\n\nДля начала выберите понравившийся фрукт и перетащите его в горшок!\n\nЕсли фрукт вам не нравится, нажмите чтобы убрать его!\n\nЕсли мелодия вам нравится, нажмите на кнопку с микрофоном, чтобы записать и сохранить ее для последующего прослушивания!\n\nУдачи и творческих успехов в Crazy Music!</string>
+
     <string name="stop">Стоп</string>
     <string name="save_composition">Сохранить мелодию</string>
     <string name="composition_name_hint">Введите название (макс. 30 символов)</string>

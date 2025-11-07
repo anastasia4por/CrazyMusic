@@ -1,12 +1,13 @@
 package com.example.crazymusic
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
@@ -21,6 +22,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var seekBarVolume: SeekBar
     private lateinit var audioManager: AudioManager
     private lateinit var switchInterfaceSounds: SwitchCompat
+    private lateinit var sharedPreferences: SharedPreferences
 
     // Слушатель системных изменений громкости
     private val volumeReceiver = object : BroadcastReceiver() {
@@ -41,11 +43,15 @@ class SettingsActivity : AppCompatActivity() {
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         switchInterfaceSounds = findViewById(R.id.switchInterfaceSounds)
 
+        // Инициализация SharedPreferences для настроек
+        sharedPreferences = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+
         // Настройка всех компонентов
         setupBackButton()
         setupSwitches()
         setupVolumeControls()
         setupDeleteButton()
+        loadCurrentSettings()
     }
 
     private fun setupBackButton() {
@@ -58,9 +64,9 @@ class SettingsActivity : AppCompatActivity() {
     private fun setupSwitches() {
         // Переключатель звуков интерфейса
         switchInterfaceSounds.setOnCheckedChangeListener { _, isChecked ->
+            saveInterfaceSoundsSetting(isChecked)
             val message = if (isChecked) "Звуки интерфейса включены" else "Звуки интерфейса выключены"
             showToast(message)
-            // Здесь будет логика сохранения настройки звуков интерфейса
         }
     }
 
@@ -99,7 +105,8 @@ class SettingsActivity : AppCompatActivity() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 showToast("Громкость установлена на ${seekBar?.progress}%")
-                // Здесь будет логика сохранения громкости
+                // Сохраняем настройку громкости
+                saveVolumeSetting(seekBar?.progress ?: 50)
             }
         })
     }
@@ -138,15 +145,33 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun deleteAllRecordedSounds() {
-        // Здесь будет реальная логика удаления звуков
-        // Пока просто показываем сообщение об успешном удалении
-        showToast("Все записанные звуки овощей удалены")
+        // Удаляем все сохранённые композиции
+        val prefs = getSharedPreferences("music_compositions", Context.MODE_PRIVATE)
+        prefs.edit().clear().apply()
 
-        // TODO: Добавьте здесь реальную логику удаления файлов звуков
-        // Например:
-        // - Удаление файлов из внутреннего хранилища
-        // - Очистка базы данных или SharedPreferences
-        // - Обновление списка звуков в приложении
+        showToast("Все записанные звуки овощей удалены")
+    }
+
+    private fun loadCurrentSettings() {
+        // Загружаем настройку звуков интерфейса
+        val soundsEnabled = sharedPreferences.getBoolean("interface_sounds", true)
+        switchInterfaceSounds.isChecked = soundsEnabled
+
+        // Загружаем настройку громкости (если нужно)
+        val savedVolume = sharedPreferences.getInt("volume_percent", 50)
+        // seekBarVolume.progress = savedVolume // Раскомментируйте если хотите сохранять громкость
+    }
+
+    private fun saveInterfaceSoundsSetting(enabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean("interface_sounds", enabled)
+            .apply()
+    }
+
+    private fun saveVolumeSetting(volumePercent: Int) {
+        sharedPreferences.edit()
+            .putInt("volume_percent", volumePercent)
+            .apply()
     }
 
     private fun showToast(message: String) {
