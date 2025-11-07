@@ -203,8 +203,8 @@ class CreateMusicActivity : AppCompatActivity() {
     private fun showSaveCompositionDialog() {
         val input = EditText(this).apply {
             inputType = InputType.TYPE_CLASS_TEXT
-            hint = "Введите название (макс. 30 символов)"
-            filters = arrayOf(InputFilter.LengthFilter(30))
+            hint = "Введите название (макс. 24 символов)"
+                    filters = arrayOf(InputFilter.LengthFilter(24))
         }
 
         AlertDialog.Builder(this)
