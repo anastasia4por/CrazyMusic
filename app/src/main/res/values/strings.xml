@@ -5,9 +5,17 @@
     <string name="repeat_music">Повтори звук</string>
     <string name="save_music">Мои песни</string>
 
-    <!-- Settings Screen Strings -->
-
-
+    <!-- Create Music Screen Strings -->
+    <string name="record">Запись</string>
+    <string name="info">Информация</string>
+    <string name="game_info_title">Об игре</string>
+    <string name="game_info_message">об игре об игре</string>
+    <string name="stop">Стоп</string>
+    <string name="save_composition">Сохранить мелодию</string>
+    <string name="composition_name_hint">Введите название (макс. 30 символов)</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="composition_saved">Мелодия сохранена!</string>
 
     <!-- Settings Screen Strings -->
     <string name="settings_title">Настройки</string>
