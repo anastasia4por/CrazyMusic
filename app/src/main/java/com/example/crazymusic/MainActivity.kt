@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, CreateMusicActivity::class.java)
             startActivity(intent)
         }
-        findViewById<MaterialButton>(R.id.buttonRepeat).setOnClickListener {
+        /*findViewById<MaterialButton>(R.id.buttonRepeat).setOnClickListener {
             val intent = Intent(this, RepeatMusicActivity::class.java)
             startActivity(intent)
-        }
+        }*/
         findViewById<MaterialButton>(R.id.buttonSongs).setOnClickListener {
             val intent = Intent(this, SaveMusicActivity::class.java)
             startActivity(intent)
