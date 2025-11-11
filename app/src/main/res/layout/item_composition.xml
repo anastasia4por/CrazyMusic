@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/card_background"
+    android:layout_margin="8dp"
+    android:padding="16dp">
+
+    <!-- Первая строка: название и кнопки -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Название композиции -->
+        <TextView
+            android:id="@+id/textCompositionName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Моя мелодия"
+            android:textColor="#2D3748"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <!-- Кнопка воспроизведения -->
+        <ImageButton
+            android:id="@+id/buttonPlay"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/back_button_background"
+            android:src="@drawable/ic_play"
+            app:tint="#FFFFFF"
+            android:layout_marginStart="8dp" />
+
+        <!-- Кнопка удаления -->
+        <ImageButton
+            android:id="@+id/buttonDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/back_button_background"
+            android:src="@drawable/ic_delete"
+            app:tint="#FFFFFF"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <!-- Вторая строка: детали -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <!-- Длительность -->
+        <TextView
+            android:id="@+id/textCompositionDuration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="02:30"
+            android:textColor="#4A5568"
+            android:textSize="14sp" />
+
+        <!-- Количество овощей -->
+        <TextView
+            android:id="@+id/textVegetableCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Овощей: 5"
+            android:textColor="#4A5568"
+            android:textSize="14sp"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <!-- Третья строка: дата -->
+    <TextView
+        android:id="@+id/textCompositionDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="01.01.2024 12:30"
+        android:textColor="#718096"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp" />
+
+</LinearLayout>

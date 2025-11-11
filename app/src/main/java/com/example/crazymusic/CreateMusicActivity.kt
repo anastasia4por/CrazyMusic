@@ -135,8 +135,17 @@ class CreateMusicActivity : AppCompatActivity() {
         recordingStartTime = System.currentTimeMillis()
         currentComposition = MusicComposition("", 0)
 
+        // Записываем текущее состояние горшков
+        potIds.forEach { potId ->
+            val pot = findViewById<FrameLayout>(potId)
+            if (pot.tag != "empty") {
+                val vegetableType = pot.tag as String
+                val marker = VegetableMarker(vegetableType, potId, 0, 0)
+                currentComposition?.addMarker(marker)
+            }
+        }
+
         recordingTimeView.visibility = View.VISIBLE
-        setVegetablesEnabled(false)
         updateRecordButton(true)
         startRecordingTimer()
     }
@@ -144,13 +153,19 @@ class CreateMusicActivity : AppCompatActivity() {
     private fun stopRecording() {
         isRecording = false
         handlers[2].removeCallbacksAndMessages(null)
-        setVegetablesEnabled(true)
         recordingTimeView.visibility = View.GONE
         updateRecordButton(false)
 
         currentComposition?.let { composition ->
             composition.duration = System.currentTimeMillis() - recordingStartTime
-            showSaveCompositionDialog()
+
+            // Показываем диалог сохранения только если есть овощи в горшках
+            if (composition.markers.isNotEmpty()) {
+                showSaveCompositionDialog()
+            } else {
+                showToast("Нет овощей для сохранения!")
+                currentComposition = null
+            }
         }
     }
 

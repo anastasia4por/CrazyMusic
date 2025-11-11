@@ -12,11 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <!-- Кнопка назад - УМЕНЬШЕННАЯ -->
+        <!-- Кнопка назад -->
         <ImageButton
             android:id="@+id/buttonBack"
             android:layout_width="50dp"
@@ -34,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
             android:text="@string/save_music"
             android:textColor="#FFFFFF"
             android:textSize="36sp"
@@ -49,5 +49,22 @@
 
     </LinearLayout>
 
+    <!-- Состояние пустого списка -->
+    <TextView
+        android:id="@+id/emptyStateText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="У вас пока нет сохранённых мелодий\n\nСоздайте свою первую мелодию!"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <!-- Список композиций -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCompositions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 
 </LinearLayout>
