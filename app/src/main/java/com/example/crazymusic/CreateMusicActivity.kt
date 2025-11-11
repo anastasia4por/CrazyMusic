@@ -8,6 +8,8 @@ import android.os.Handler
 import android.view.DragEvent
 import android.view.View
 import android.widget.*
+import android.text.TextWatcher
+import android.text.Editable
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -219,26 +221,47 @@ class CreateMusicActivity : AppCompatActivity() {
         val input = EditText(this).apply {
             inputType = InputType.TYPE_CLASS_TEXT
             hint = "Введите название (макс. 24 символов)"
-                    filters = arrayOf(InputFilter.LengthFilter(24))
+            filters = arrayOf(InputFilter.LengthFilter(24))
         }
 
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle("Сохранить мелодию")
             .setView(input)
-            .setPositiveButton("Сохранить") { dialog, _ ->
+            .setPositiveButton("Сохранить", null) // Устанавливаем null, чтобы обработать нажатие позже
+            .setNegativeButton("Отмена") { dialog, _ ->
+                currentComposition = null
+                dialog.cancel()
+            }
+            .create()
+
+        dialog.setOnShowListener {
+            val saveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            saveButton.isEnabled = false // Изначально кнопка неактивна
+
+            // Добавляем слушатель изменений текста
+            input.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    val name = s?.toString()?.trim() ?: ""
+                    saveButton.isEnabled = name.isNotEmpty()
+                }
+            })
+
+            // Обрабатываем нажатие кнопки "Сохранить"
+            saveButton.setOnClickListener {
                 val name = input.text.toString().trim()
                 if (name.isNotEmpty()) {
                     currentComposition?.name = name
                     currentComposition?.let { saveComposition(it) }
                     showToast("Мелодия сохранена!")
+                    dialog.dismiss()
                 }
-                dialog.dismiss()
             }
-            .setNegativeButton("Отмена") { dialog, _ ->
-                currentComposition = null
-                dialog.cancel()
-            }
-            .show()
+        }
+
+        dialog.show()
     }
 
     private fun saveComposition(composition: MusicComposition) {

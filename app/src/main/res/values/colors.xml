@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="violet">#521262</color>
     <color name="switch_track_color">#a3fd1c</color>
     <color name="switch_track_color_off">#B1B1B3</color>
     <color name="switch_thumb_color">#22C55E</color>
