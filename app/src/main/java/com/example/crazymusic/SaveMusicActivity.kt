@@ -1,18 +1,24 @@
 package com.example.crazymusic
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
+import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -27,6 +33,10 @@ class SaveMusicActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val activeSounds = mutableMapOf<Int, MediaPlayer>()
 
+    companion object {
+        private const val TAG = "SaveMusicActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_music)
@@ -34,7 +44,6 @@ class SaveMusicActivity : AppCompatActivity() {
         setupUI()
         loadCompositions()
         setupBackButton()
-
     }
 
     private fun setupUI() {
@@ -45,6 +54,7 @@ class SaveMusicActivity : AppCompatActivity() {
             compositions = compositions,
             onPlayPauseClick = { position -> togglePlayPause(position) },
             onDeleteClick = { position -> showDeleteDialog(position) },
+            onShareClick = { position -> shareComposition(position) },
             onCompositionClick = { position -> showCompositionDetails(position) }
         )
 
@@ -159,15 +169,141 @@ class SaveMusicActivity : AppCompatActivity() {
             .show()
     }
 
+    private fun shareComposition(position: Int) {
+        val composition = compositions[position]
+
+        try {
+            showToast("Создание аудиофайла...")
+
+            // Создаем временный файл во внешней директории
+            val storageDir = getExternalFilesDir(null)
+            val audioFile = File(storageDir, "${composition.name}_${System.currentTimeMillis()}.mp3")
+
+            // Создаем простой аудиофайл с основным звуком
+            createSimpleAudioFile(composition, audioFile)
+
+            if (audioFile.exists() && audioFile.length() > 0) {
+                // Создаем URI для файла используя FileProvider
+                val audioUri = FileProvider.getUriForFile(
+                    this,
+                    "${packageName}.provider",
+                    audioFile
+                )
+
+                // Создаем Intent для отправки аудио
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "audio/*"
+                    putExtra(Intent.EXTRA_STREAM, audioUri)
+                    putExtra(Intent.EXTRA_SUBJECT, composition.name)
+                    putExtra(Intent.EXTRA_TEXT,
+                        "Моя мелодия: ${composition.name}\n" +
+                                "Длительность: ${formatDuration(composition.duration)}\n" +
+                                "Овощей: ${composition.markers.size}\n" +
+                                "Создано в приложении Crazy Music!")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                // Запускаем меню выбора приложения для отправки
+                startActivity(Intent.createChooser(shareIntent, "Поделиться мелодией"))
+
+            } else {
+                showToast("Не удалось создать аудиофайл")
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            showToast("Ошибка при создании аудио")
+            Log.e(TAG, "Error sharing composition", e)
+
+            // Если не получилось с аудио, делимся текстом
+            shareAsText(composition)
+        }
+    }
+
+    private fun createSimpleAudioFile(composition: MusicComposition, outputFile: File) {
+        try {
+            // Используем первый овощ как основной звук
+            val mainVegetable = createVegetableByType(
+                composition.markers.firstOrNull()?.vegetableType ?: "orange"
+            )
+
+            if (mainVegetable != null) {
+                // Копируем raw ресурс во временный файл
+                resources.openRawResource(mainVegetable.soundId).use { input ->
+                    FileOutputStream(outputFile).use { output ->
+                        input.copyTo(output)
+                    }
+                }
+                Log.d(TAG, "Аудиофайл создан: ${outputFile.absolutePath}, размер: ${outputFile.length()} байт")
+            } else {
+                // Если овощей нет, создаем простой текстовый файл с описанием
+                createDescriptionFile(composition, outputFile)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error creating simple audio file", e)
+            // Если не получилось создать аудио, создаем файл с описанием
+            createDescriptionFile(composition, outputFile)
+        }
+    }
+
+    private fun createDescriptionFile(composition: MusicComposition, outputFile: File) {
+        try {
+            val description = """
+                Мелодия: ${composition.name}
+                Длительность: ${formatDuration(composition.duration)}
+                Дата создания: ${formatDate(composition.creationDate)}
+                Количество овощей: ${composition.markers.size}
+                Овощи: ${composition.markers.joinToString { getVegetableDisplayName(it.vegetableType) }}
+                
+                Создано в приложении Crazy Music!
+            """.trimIndent()
+
+            FileOutputStream(outputFile).use { output ->
+                output.write(description.toByteArray())
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error creating description file", e)
+        }
+    }
+
+    private fun shareAsText(composition: MusicComposition) {
+        try {
+            val shareText = """
+                🎵 ${composition.name}
+                
+                Длительность: ${formatDuration(composition.duration)}
+                Количество овощей: ${composition.markers.size}
+                Дата создания: ${formatDate(composition.creationDate)}
+                
+                Создано в приложении Crazy Music!
+                Скачайте приложение чтобы послушать эту мелодию!
+            """.trimIndent()
+
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                putExtra(Intent.EXTRA_SUBJECT, "Моя мелодия: ${composition.name}")
+            }
+
+            startActivity(Intent.createChooser(shareIntent, "Поделиться мелодией"))
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            showToast("Ошибка при отправке")
+        }
+    }
+
     private fun showCompositionDetails(position: Int) {
         val composition = compositions[position]
 
         val details = """
-        Название: ${composition.name}
-        Длительность: ${formatDuration(composition.duration)}
-        Дата создания: ${formatDate(composition.creationDate)}
-        Количество овощей: ${composition.markers.size}
-    """.trimIndent()
+            Название: ${composition.name}
+            Длительность: ${formatDuration(composition.duration)}
+            Дата создания: ${formatDate(composition.creationDate)}
+            Количество овощей: ${composition.markers.size}
+        """.trimIndent()
 
         AlertDialog.Builder(this)
             .setTitle("Информация о мелодии")
@@ -235,6 +371,7 @@ class SaveMusicActivity : AppCompatActivity() {
         private var compositions: List<MusicComposition>,
         private val onPlayPauseClick: (Int) -> Unit,
         private val onDeleteClick: (Int) -> Unit,
+        private val onShareClick: (Int) -> Unit,
         private val onCompositionClick: (Int) -> Unit
     ) : RecyclerView.Adapter<MusicCompositionAdapter.ViewHolder>() {
 
@@ -243,6 +380,7 @@ class SaveMusicActivity : AppCompatActivity() {
             val duration: TextView = itemView.findViewById(R.id.textCompositionDuration)
             val date: TextView = itemView.findViewById(R.id.textCompositionDate)
             val playButton: ImageButton = itemView.findViewById(R.id.buttonPlay)
+            val shareButton: ImageButton = itemView.findViewById(R.id.shareButton)
             val deleteButton: ImageButton = itemView.findViewById(R.id.buttonDelete)
             val vegetableCount: TextView = itemView.findViewById(R.id.textVegetableCount)
         }
@@ -272,6 +410,10 @@ class SaveMusicActivity : AppCompatActivity() {
             // Обработчики кликов
             holder.playButton.setOnClickListener {
                 onPlayPauseClick(position)
+            }
+
+            holder.shareButton.setOnClickListener {
+                onShareClick(position)
             }
 
             holder.deleteButton.setOnClickListener {

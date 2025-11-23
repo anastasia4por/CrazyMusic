@@ -57,7 +57,7 @@
         android:gravity="center"
         android:text="У вас пока нет сохранённых мелодий\n\nСоздайте свою первую мелодию!"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+            android:textSize="18sp"
         android:visibility="gone" />
 
     <!-- Список композиций -->

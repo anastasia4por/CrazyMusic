@@ -35,8 +35,10 @@
             android:layout_height="40dp"
             android:background="@drawable/back_button_background"
             android:src="@drawable/ic_play"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:contentDescription="Воспроизвести" />
 
+        <!-- Кнопка поделиться -->
         <ImageButton
             android:id="@+id/shareButton"
             android:layout_width="40dp"
@@ -53,7 +55,8 @@
             android:layout_height="40dp"
             android:background="@drawable/back_button_background"
             android:src="@drawable/ic_delete"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:contentDescription="Удалить" />
 
     </LinearLayout>
 
